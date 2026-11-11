@@ -238,7 +238,7 @@ draw_graph :: proc(gfx: ^GFX_Context, header: string, history: ^queue.Queue(f64)
 	graph_size: f64 = 150
 
 	max_val : f64 = 0
-	min_val : f64 = 1e5000
+	min_val : f64 = math.INF_F64
 	sum_val : f64 = 0
 	for i := 0; i < queue.len(history^); i += 1 {
 		entry := queue.get(history, i)
@@ -2517,7 +2517,7 @@ post_load_cleanup :: proc(gfx: ^GFX_Context, trace: ^Trace, ui_state: ^UIState) 
 	reset_flamegraph_camera(trace, ui_state)
 
 	if trace.file_name != "" {
-		name := fmt.ctprintf("%s - spall beta 0.5", trace.base_name)
+		name := fmt.ctprintf("%s - spall beta 0.5 -- fbt patch --", trace.base_name)
 		set_window_title(gfx, name)
 	}
 	ui_state.post_loading = false
