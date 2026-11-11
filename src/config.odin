@@ -3,6 +3,7 @@ package main
 import "base:runtime"
 
 import "core:os"
+import "core:io"
 import "core:fmt"
 import "core:slice"
 import "core:bytes"
@@ -672,7 +673,7 @@ load_spall_file :: proc(loader: ^Loader, trace: ^Trace, file_name: string) {
 
 	header_buffer := [0x4000]u8{}
 	rd_sz, err3 := os.read_at(trace_fd, header_buffer[:], 0)
-	if err3 != nil {
+	if err3 != nil && err3 != io.Error.EOF {
 		post_error(trace, "Unable to read %s!", file_name)
 		return
 	}
